@@ -1,0 +1,17 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "foreman": "^2.0.0",
+    "ace-css": "1.1",
+    "css-loader": "^0.26.1",
+    "font-awesome": "4"
+  }
+}
