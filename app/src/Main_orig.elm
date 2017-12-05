@@ -1,5 +1,5 @@
 module Main exposing (..)
-
+{-
 import Commands exposing (fetchPlayers)
 import Models exposing (Model, initialModel)
 import Msgs exposing (Msg)
@@ -35,3 +35,4 @@ main =
         , update = update
         , subscriptions = subscriptions
         }
+-}

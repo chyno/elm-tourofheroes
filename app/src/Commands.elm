@@ -1,14 +1,27 @@
 module Commands exposing (..)
-
 import Http
 import Json.Decode as Decode
 import Json.Decode.Pipeline exposing (decode, required)
 import Json.Encode as Encode
 import Msgs exposing (Msg)
-import Models exposing (PlayerId, Player)
+import Models exposing (HeroId, Hero)
 import RemoteData
 
 
+
+fetchHeroes : Cmd Msg
+fetchHeroes =
+    Http.get fetchHeroesUrl heroesDecoder
+        |> RemoteData.sendRequest
+        |> Cmd.map Msgs.OnFetchHeroes
+
+
+fetchHeroesUrl : String
+fetchHeroesUrl =
+    "http://localhost:4000/heroes"
+
+
+{-
 fetchPlayers : Cmd Msg
 fetchPlayers =
     Http.get fetchPlayersUrl playersDecoder
@@ -43,12 +56,24 @@ savePlayerCmd : Player -> Cmd Msg
 savePlayerCmd player =
     savePlayerRequest player
         |> Http.send Msgs.OnPlayerSave
-
+-}
 
 
 -- DECODERS
+heroesDecoder : Decode.Decoder (List Hero)
+heroesDecoder =
+    Decode.list heroDecoder
 
 
+heroDecoder : Decode.Decoder Hero
+heroDecoder =
+    decode Hero
+        |> required "id" Decode.string
+        |> required "name" Decode.string
+         
+
+
+{-
 playersDecoder : Decode.Decoder (List Player)
 playersDecoder =
     Decode.list playerDecoder
@@ -72,3 +97,4 @@ playerEncoder player =
             ]
     in
         Encode.object attributes
+-}
