@@ -56,8 +56,8 @@ savePlayerCmd : Player -> Cmd Msg
 savePlayerCmd player =
     savePlayerRequest player
         |> Http.send Msgs.OnPlayerSave
--}
 
+-}
 
 -- DECODERS
 heroesDecoder : Decode.Decoder (List Hero)

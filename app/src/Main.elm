@@ -1,13 +1,15 @@
 module Main exposing (..)
 
-
+import Routing exposing (..)
+import View exposing (view)
+--import Update exposing(update)
 import Commands exposing (fetchHeroes)
 import Models exposing (..)
 import Msgs exposing (Msg)
 import Navigation exposing (Location)
-import Routing
-import Dashboard  exposing (view, update)
+import Dashboard exposing (update)
 
+--import Elemement exposing (..)
 init : Location ->  ( Model, Cmd Msg )
 init location =
    let
@@ -21,7 +23,9 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
 
--- MAIN
+
+
+ -- MAIN
 main : Program Never Model Msg
 main =
     Navigation.program Msgs.OnLocationChange

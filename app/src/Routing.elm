@@ -19,16 +19,12 @@ parseLocation location =
     case (parseHash matchers location) of
         Just route ->
             route
-
         Nothing ->
             NotFoundRoute
-
-
 
 heroesPath : String
 heroesPath =
     "#heroes"
-
 
 heroPath : HeroId -> String
 heroPath id =

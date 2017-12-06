@@ -1,13 +1,11 @@
 module View exposing (..)
-
-import Html exposing (Html, div, text)
-import Models exposing (Model, PlayerId)
-import Models exposing (Model)
+import Html.Attributes exposing (class, href)
+import Html exposing (Html, div, text, h4)
+import Models exposing (..)
 import Msgs exposing (Msg)
-import Players.Edit
-import Players.List
+import RemoteData exposing (WebData)
+import Routing exposing (parseLocation)
 import RemoteData
-
 
 view : Model -> Html Msg
 view model =
@@ -15,44 +13,43 @@ view model =
         [ page model ]
 
 
-page : Model -> Html Msg
-page model =
-    case model.route of
-        Models.PlayersRoute ->
-            Players.List.view model.players
+heroesView : List  Hero -> Html Msg
+heroesView heroes =
+  div [class "grid grid-pad"]
+       (List.map heroView heroes)
 
-        Models.PlayerRoute id ->
-            playerEditPage model id
+heroView :  Hero -> Html Msg
+heroView hero =
+  div [class "module hero"]
+      [h4 [][ text hero.name] ]
 
-        Models.NotFoundRoute ->
-            notFoundView
-
-
-playerEditPage : Model -> PlayerId -> Html Msg
-playerEditPage model playerId =
-    case model.players of
+maybeList : WebData (List Hero) -> Html Msg
+maybeList response =
+    case response of
         RemoteData.NotAsked ->
             text ""
 
         RemoteData.Loading ->
-            text "Loading ..."
+            text "Loading..."
 
-        RemoteData.Success players ->
-            let
-                maybePlayer =
-                    players
-                        |> List.filter (\player -> player.id == playerId)
-                        |> List.head
-            in
-                case maybePlayer of
-                    Just player ->
-                        Players.Edit.view player
+        RemoteData.Success heroes ->
+            (heroesView heroes)
 
-                    Nothing ->
-                        notFoundView
+        RemoteData.Failure error ->
+            text (toString error)
 
-        RemoteData.Failure err ->
-            text (toString err)
+
+page : Model -> Html Msg
+page model =
+    case model.route of
+        Models.HeroesRoute ->
+          maybeList model.heroes
+        Models.HeroRoute id ->
+            notFoundView
+
+        Models.NotFoundRoute ->
+            notFoundView
+
 
 
 notFoundView : Html msg
