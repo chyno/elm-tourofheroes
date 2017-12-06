@@ -9,7 +9,7 @@ matchers : Parser (Route -> a) a
 matchers =
     oneOf
         [ map HeroesRoute top
-        , map HeroRoute (s "heroes" </> string)
+        , map HeroRoute (s "dashboard" </> string)
         , map HeroesRoute (s "heroes")
         ]
 
@@ -22,9 +22,9 @@ parseLocation location =
         Nothing ->
             NotFoundRoute
 
-heroesPath : String
-heroesPath =
-    "#heroes"
+dashboardPath : String
+dashboardPath =
+    "#dashboard"
 
 heroPath : HeroId -> String
 heroPath id =
