@@ -10,7 +10,7 @@ headerView : Model -> Html Msg
 headerView model =
   nav []
       [
-          a [href dashboardPath][text "Dashboard"]
+          a [href heroesPath][text "Dashboard"]
       ]
 
 view : Model -> Html Msg
@@ -60,7 +60,7 @@ page model =
         Models.HeroesRoute ->
           maybeList model.heroes
         Models.HeroRoute id ->
-            notFoundView
+            heroDetailView
 
         Models.NotFoundRoute ->
             notFoundView
