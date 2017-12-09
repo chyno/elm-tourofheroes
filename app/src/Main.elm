@@ -15,7 +15,7 @@ init location =
         currentRoute =
             Routing.parseLocation location
     in
-        ( (initialModel currentRoute), fetchFavorites )
+        ( (initialModel currentRoute), Cmd.none )
 
 
 subscriptions : Model -> Sub Msg

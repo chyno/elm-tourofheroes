@@ -7,10 +7,23 @@ import Routing exposing (parseLocation)
 import Commands exposing (..)
 
 
-
+filterHeroes : List Hero -> String -> List Hero
+filterHeroes allHeroes fltStr =
+    if (String.length fltStr) < 1 then
+        []
+    else
+        List.filter (\item -> String.contains fltStr item.name) allHeroes
+        
+ 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        Msgs.FilterHeroes flt ->
+            case model.heroes of
+                RemoteData.Success heroes ->
+                    ( { model | filteredHeroes = (filterHeroes heroes flt) }, Cmd.none )  
+                _ ->
+                    (model, Cmd.none )          
         Msgs.OnFetchFavorites response ->
            ( { model | heroes = response  }, Cmd.none )
         Msgs.OnFetchHeroes response ->

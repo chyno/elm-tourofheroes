@@ -7,11 +7,10 @@ import RemoteData exposing (WebData)
 
 
 type Msg
-    = OnFetchHeroes (WebData (List Hero))
-    | OnFetchFavorites (WebData (List Hero))
-    | OnFetchHero (WebData (Hero))
-    | OnLocationChange Location 
-    --OnFetchPlayers (WebData (List Player))
-   -- 
-   ---- | ChangeLevel Player Int
-   -- | OnPlayerSave (Result Http.Error Player)
+    =   OnFetchHeroes (WebData (List Hero))
+        | OnFetchFavorites (WebData (List Hero))
+        | OnFetchHero (WebData (Hero))
+        | OnLocationChange Location
+        | FilterHeroes String
+     
+

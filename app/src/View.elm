@@ -8,6 +8,14 @@ import RemoteData
 import Routing exposing (..)
 import Heroes.List exposing (..)
 
+
+view : Model -> Html Msg
+view model =
+    div []
+        [   headerView model,
+            h4 [][text "Tour of Heroes"],
+            page model ]
+
 headerView : Model -> Html Msg
 headerView model =
   nav []
@@ -15,52 +23,6 @@ headerView model =
           a [href dashboardPath][text "Dashboard"],
           a [href heroesPath][text "Heroes"]
       ]
-
-view : Model -> Html Msg
-view model =
-    div []
-        [   headerView model,
-            h4 [][text "John Heroes"],
-            page model ]
-
-
-
-maybeList : Model ->   Html Msg
-maybeList model  =
-  let
-      response = model.heroes
-      v  =
-         case model.route of
-            Models.FavoritesRoute ->
-                favoritesView
-            Models.HeroesRoute ->
-                heroesView
-            _ ->
-              favoritesView
-  in  
-    case response of
-        RemoteData.NotAsked ->
-            text ""
-        RemoteData.Loading ->
-            text "Loading..."
-        RemoteData.Success heroes ->
-            v heroes
-        RemoteData.Failure error ->
-            text (toString error)
-
-
-maybeDetail : WebData (Hero) ->   Html Msg
-maybeDetail response  =
-    case response of
-        RemoteData.NotAsked ->
-            text "Not asked..."
-        RemoteData.Loading ->
-            text "Loading..."
-        RemoteData.Success hero ->
-          detailView hero
-        RemoteData.Failure error ->
-            text (toString error)
-
 page : Model -> Html Msg
 page model =
     case model.route of
@@ -72,6 +34,42 @@ page model =
           maybeDetail model.selectedHero
         Models.NotFoundRoute ->
           notFoundView
+
+-- Show correct view on  web request results concerning list of Heroes
+maybeList : Model ->   Html Msg
+maybeList model  =
+  let
+      listview  =
+         case model.route of
+            Models.FavoritesRoute ->
+                (favoritesView model.filteredHeroes)
+            Models.HeroesRoute ->
+                heroesView
+            _ ->
+              (favoritesView model.filteredHeroes)
+  in  
+    case model.heroes of
+        RemoteData.NotAsked ->
+            text ""
+        RemoteData.Loading ->
+            text "Loading..."
+        RemoteData.Success heroes ->
+            listview heroes
+        RemoteData.Failure error ->
+            text (toString error)
+
+-- Show correct view on  web request results concerning Hero detail
+maybeDetail : WebData (Hero) ->   Html Msg
+maybeDetail response  =
+    case response of
+        RemoteData.NotAsked ->
+            text "Not asked..."
+        RemoteData.Loading ->
+            text "Loading..."
+        RemoteData.Success hero ->
+          detailView hero
+        RemoteData.Failure error ->
+            text (toString error)
           
 notFoundView : Html msg
 notFoundView =

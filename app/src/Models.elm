@@ -10,6 +10,7 @@ type alias Model =
     { heroes :  WebData (List Hero)
     , route : Route
     , selectedHero : WebData (Hero)
+    , filteredHeroes : List Hero
     }
 
 
@@ -31,6 +32,7 @@ initialModel route =
     { heroes = RemoteData.Loading
     , route = route
     , selectedHero = RemoteData.NotAsked
+    , filteredHeroes = []
     }
 
 
@@ -39,37 +41,3 @@ type Route
     | HeroesRoute
     | HeroRoute HeroId
     | NotFoundRoute
-
-{-
-import RemoteData exposing (WebData)
-
-
-type alias Model =
-    { players : WebData (List Player)
-    , route : Route
-    }
-
-
-initialModel : Route -> Model
-initialModel route =
-    { players = RemoteData.Loading
-    , route = route
-    }
-
-
-type alias PlayerId =
-    String
-
-
-type alias Player =
-    { id : PlayerId
-    , name : String
-    , level : Int
-    }
-
-
-type Route
-    = PlayersRoute
-    | PlayerRoute PlayerId
-    | NotFoundRoute
--}
