@@ -8,6 +8,8 @@ import RemoteData exposing (WebData)
 
 type Msg
     = OnFetchHeroes (WebData (List Hero))
+    | OnFetchFavorites (WebData (List Hero))
+    | OnFetchHero (WebData (Hero))
     | OnLocationChange Location
     --OnFetchPlayers (WebData (List Player))
    -- 

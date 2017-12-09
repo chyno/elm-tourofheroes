@@ -3,7 +3,7 @@ module Main exposing (..)
 import Routing exposing (..)
 import View exposing (view)
 --import Update exposing(update)
-import Commands exposing (fetchHeroes)
+import Commands exposing (fetchHeroes, fetchFavorites)
 import Models exposing (..)
 import Msgs exposing (Msg)
 import Navigation exposing (Location)
@@ -16,14 +16,12 @@ init location =
         currentRoute =
             Routing.parseLocation location
     in
-        ( (initialModel currentRoute), fetchHeroes )
+        ( (initialModel currentRoute), fetchFavorites )
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
-
-
 
  -- MAIN
 main : Program Never Model Msg
