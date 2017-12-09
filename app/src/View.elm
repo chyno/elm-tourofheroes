@@ -12,7 +12,7 @@ headerView model =
   nav []
       [
           a [href dashboardPath][text "Dashboard"],
-          a [href heroesPath][text "Details"]
+          a [href heroesPath][text "Heroes"]
       ]
 
 view : Model -> Html Msg
@@ -49,23 +49,31 @@ detailView hero =
       , span [] [ text hero.name]
   ]
 
-type LoadingPage 
+type ListPage 
   = Favorites  |
     All 
 
-maybeList : WebData (List Hero) -> LoadingPage ->  Html Msg
-maybeList response lp =
+maybeList : Model ->   Html Msg
+maybeList model  =
+  let
+      response = model.heroes
+      v  =
+         case model.route of
+            Models.FavoritesRoute ->
+                favoritesView
+            Models.HeroesRoute ->
+                heroesView
+            _ ->
+              favoritesView
+  in
+      
     case response of
         RemoteData.NotAsked ->
             text ""
         RemoteData.Loading ->
             text "Loading..."
         RemoteData.Success heroes ->
-          case lp of
-            Favorites ->
-              favoritesView  heroes 
-            All ->
-              heroesView heroes
+            v heroes
         RemoteData.Failure error ->
             text (toString error)
 
@@ -86,9 +94,9 @@ page : Model -> Html Msg
 page model =
     case model.route of
         Models.FavoritesRoute ->
-          maybeList model.heroes Favorites
+          maybeList model
         Models.HeroesRoute ->
-          maybeList model.heroes All
+          maybeList model
         Models.HeroRoute id ->
           maybeDetail model.selectedHero
         Models.NotFoundRoute ->
@@ -112,4 +120,4 @@ heroView hero =
 notFoundView : Html msg
 notFoundView =
     div []
-        [ text "Not found"]
+        [text "Not found"]
