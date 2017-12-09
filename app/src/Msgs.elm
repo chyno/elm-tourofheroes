@@ -10,7 +10,7 @@ type Msg
     = OnFetchHeroes (WebData (List Hero))
     | OnFetchFavorites (WebData (List Hero))
     | OnFetchHero (WebData (Hero))
-    | OnLocationChange Location
+    | OnLocationChange Location 
     --OnFetchPlayers (WebData (List Player))
    -- 
    ---- | ChangeLevel Player Int

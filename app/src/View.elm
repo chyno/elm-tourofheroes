@@ -49,7 +49,6 @@ detailView hero =
       , span [] [ text hero.name]
   ]
 
-
 type LoadingPage 
   = Favorites  |
     All 
@@ -59,7 +58,6 @@ maybeList response lp =
     case response of
         RemoteData.NotAsked ->
             text ""
-
         RemoteData.Loading ->
             text "Loading..."
         RemoteData.Success heroes ->
@@ -96,15 +94,13 @@ page model =
         Models.NotFoundRoute ->
           notFoundView
 
-
-heroesView :List Hero -> Html msg
+heroesView : List Hero -> Html msg
 heroesView heroes =
-  
-    div []
-        [ h2 [] [text "Hero Details Here"],
-          ul []
-          (List.map heroView heroes)
-        ]
+  div []
+      [ h2 [] [text "Hero Details Here"],
+        ul []
+      ( List.map heroView heroes)
+      ]
 
 heroView  : Hero -> Html msg
 heroView hero = 

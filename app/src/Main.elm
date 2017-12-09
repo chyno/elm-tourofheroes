@@ -2,12 +2,11 @@ module Main exposing (..)
 
 import Routing exposing (..)
 import View exposing (view)
---import Update exposing(update)
 import Commands exposing (fetchHeroes, fetchFavorites)
 import Models exposing (..)
 import Msgs exposing (Msg)
 import Navigation exposing (Location)
-import Dashboard exposing (update)
+import Update exposing (update)
 
 --import Elemement exposing (..)
 init : Location ->  ( Model, Cmd Msg )
