@@ -6,6 +6,7 @@ import Msgs exposing (Msg)
 import RemoteData exposing (WebData)
 import RemoteData
 import Routing exposing (..)
+import Heroes.List exposing (..)
 
 headerView : Model -> Html Msg
 headerView model =
@@ -23,35 +24,6 @@ view model =
             page model ]
 
 
-favoritesView : List  Hero -> Html Msg
-favoritesView heroes =
-  div [class "grid grid-pad"]
-       (List.map favoriteView heroes)
-
-favoriteView :  Hero -> Html Msg
-favoriteView hero =
-  div
-  []
-  [
-  nav []
-     [ a [class "col-1-4", href (heroPath hero.id)][text "Details"]
-      , div [class "module hero"] [h4 [][ text hero.name] ]
-     ]
-  ]
-
-detailView :  Hero -> Html Msg
-detailView hero =
-  div
-  []
-  [
-      h2 [][text "Details View"]
-      , label [][text "Name"]
-      , span [] [ text hero.name]
-  ]
-
-type ListPage 
-  = Favorites  |
-    All 
 
 maybeList : Model ->   Html Msg
 maybeList model  =
@@ -65,8 +37,7 @@ maybeList model  =
                 heroesView
             _ ->
               favoritesView
-  in
-      
+  in  
     case response of
         RemoteData.NotAsked ->
             text ""
@@ -101,22 +72,7 @@ page model =
           maybeDetail model.selectedHero
         Models.NotFoundRoute ->
           notFoundView
-
-heroesView : List Hero -> Html msg
-heroesView heroes =
-  div []
-      [ h2 [] [text "Hero Details Here"],
-        ul []
-      ( List.map heroView heroes)
-      ]
-
-heroView  : Hero -> Html msg
-heroView hero = 
- div []
-      [ label [][text "Name: "]
-      , span [] [text hero.name]
-      ]
-
+          
 notFoundView : Html msg
 notFoundView =
     div []
