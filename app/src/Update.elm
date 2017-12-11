@@ -24,8 +24,8 @@ update msg model =
                     ( { model | filteredHeroes = (filterHeroes heroes flt) }, Cmd.none )  
                 _ ->
                     (model, Cmd.none )          
-        Msgs.OnFetchFavorites response ->
-           ( { model | heroes = response  }, Cmd.none )
+     --   Msgs.OnFetchFavorites response ->
+     --      ( { model | heroes = response  }, Cmd.none )
         Msgs.OnFetchHeroes response ->
             ( { model | heroes = response }, Cmd.none )
         Msgs.OnFetchHero response ->
@@ -37,7 +37,7 @@ update msg model =
             in
                 case newRoute of
                     FavoritesRoute ->
-                        ( { model | route = newRoute }, fetchFavorites )
+                        ( { model | route = newRoute }, fetchHeroes )
                     HeroesRoute ->
                         ( { model | route = newRoute }, fetchHeroes )
                     HeroRoute id ->

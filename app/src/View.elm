@@ -12,16 +12,16 @@ import Heroes.List exposing (..)
 view : Model -> Html Msg
 view model =
     div []
-        [   headerView model,
-            h4 [][text "Tour of Heroes"],
-            page model ]
+        [   h4 [][text "Tour of Heroes"]
+            , headerView model
+            , page model ]
 
 headerView : Model -> Html Msg
 headerView model =
   nav []
       [
-          a [href dashboardPath][text "Dashboard"],
-          a [href heroesPath][text "Heroes"]
+          a [href dashboardPath][text "Dashboard"]
+          , a [href heroesPath][text "Heroes"]
       ]
 page : Model -> Html Msg
 page model =
@@ -38,23 +38,24 @@ page model =
 -- Show correct view on  web request results concerning list of Heroes
 maybeList : Model ->   Html Msg
 maybeList model  =
-  let
-      listview  =
-         case model.route of
-            Models.FavoritesRoute ->
-                (favoritesView model.filteredHeroes)
-            Models.HeroesRoute ->
-                heroesView
-            _ ->
-              (favoritesView model.filteredHeroes)
-  in  
     case model.heroes of
         RemoteData.NotAsked ->
             text ""
         RemoteData.Loading ->
             text "Loading..."
         RemoteData.Success heroes ->
-            listview heroes
+        let
+            listview  =
+            case model.route of
+                Models.FavoritesRoute ->
+                    (favoritesView model.filteredHeroes (List.take 3 heroes))
+                Models.HeroesRoute ->
+                    heroesView heroes
+                _ ->
+                    (favoritesView model.filteredHeroes (List.take 3 heroes))
+            
+        in
+            listview 
         RemoteData.Failure error ->
             text (toString error)
 

@@ -8,10 +8,9 @@ import Models exposing (HeroId, Hero)
 import RemoteData
 
 
-
 fetchHero : String -> Cmd Msg
 fetchHero id =
-   Debug.log "... fetching hero"
+    Debug.log "... fetching hero"
     Http.get (fetchHeroUrl id) heroDecoder
         |> RemoteData.sendRequest
         |> Cmd.map Msgs.OnFetchHero
@@ -29,7 +28,7 @@ fetchFavorites =
     Debug.log "... fetching favotites"
     Http.get fetchFavoritesUrl heroesDecoder
         |> RemoteData.sendRequest
-        |> Cmd.map Msgs.OnFetchFavorites
+        |> Cmd.map Msgs.OnFetchHeroes
 
 
 fetchHeroesUrl : String

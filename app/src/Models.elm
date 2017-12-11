@@ -1,10 +1,11 @@
 module Models exposing (..)
 import RemoteData exposing (WebData)
 
-
+{-
 type LoadingPage 
   = Favorites  |
     All 
+ -}
     
 type alias Model =
     { heroes :  WebData (List Hero)
