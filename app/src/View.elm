@@ -1,6 +1,7 @@
 module View exposing (..)
-import Html.Attributes exposing (class, href)
-import Html exposing (Html, div,span, text, h4,a,p, h1, nav, h2,ul,li, label)
+--import Html.Attributes exposing (class, href)
+import Html.Styled exposing (..)
+--import Html exposing (Html, div,span, text, h4,a,p, h1, nav, h2,ul,li, label)
 import Models exposing (..)
 import Msgs exposing (Msg)
 import RemoteData exposing (WebData)
@@ -8,11 +9,12 @@ import RemoteData
 import Routing exposing (..)
 import Heroes.List exposing (..)
 import Heroes.Detail exposing (..)
-
+import Css exposing (..)
+import Html.Styled.Attributes exposing (class, href,css)
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ css [display inlineBlock]]
         [   h4 [][text "Tour of Heroes"]
             , headerView model
             , page model ]
@@ -45,20 +47,20 @@ maybeList model  =
         RemoteData.Loading ->
             text "Loading..."
         RemoteData.Success heroes ->
-        let
-            listview  =
-            case model.route of
-                Models.FavoritesRoute ->
-                    (favoritesView model.filteredHeroes (List.take 3 heroes))
-                Models.HeroesRoute ->
-                    heroesView heroes
-                _ ->
-                    (favoritesView model.filteredHeroes (List.take 3 heroes))
-            
-        in
-            listview 
+            let
+                listview  =
+                case model.route of
+                    Models.FavoritesRoute ->
+                        (favoritesView model.filteredHeroes (List.take 3 heroes))
+                    Models.HeroesRoute ->
+                        heroesView heroes
+                    _ ->
+                        (favoritesView model.filteredHeroes (List.take 3 heroes))
+                
+            in
+                listview 
         RemoteData.Failure error ->
-            text (toString error)
+                text (toString error)
 
 -- Show correct view on  web request results concerning Hero detail
 maybeDetail : WebData (Hero) ->   Html Msg

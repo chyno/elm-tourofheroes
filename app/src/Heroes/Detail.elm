@@ -1,8 +1,8 @@
 module Heroes.Detail exposing (..)
-import Html exposing (..)
+import Html.Styled exposing (..)
 import Models exposing (..)
 import Msgs exposing (Msg)
-import Html.Events exposing (onClick)
+import Html.Styled.Events exposing (onClick)
 
 {-
 <div *ngIf="hero">

@@ -7,6 +7,7 @@ import Models exposing (..)
 import Msgs exposing (Msg)
 import Navigation exposing (Location)
 import Update exposing (update)
+import Html.Styled exposing (..)
 
 --import Elemement exposing (..)
 init : Location ->  ( Model, Cmd Msg )
@@ -27,7 +28,7 @@ main : Program Never Model Msg
 main =
     Navigation.program Msgs.OnLocationChange
         { init = init
-        , view = view
+        , view = view  >> toUnstyled
         , update = update
         , subscriptions = subscriptions
         }
