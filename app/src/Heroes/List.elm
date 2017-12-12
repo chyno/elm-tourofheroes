@@ -1,5 +1,5 @@
 module Heroes.List exposing (..)
-import Html.Attributes exposing (class, href,id, placeholder  )
+import Html.Attributes exposing (class, href,id, placeholder, title  )
 import Html.Events exposing (onInput)
 import Html exposing (..)
 import Models exposing (..)
@@ -8,6 +8,7 @@ import Routing exposing (..)
 import RemoteData exposing (WebData)
 import RemoteData
 
+-- Fovrotes views
 favoritesView : List Hero -> List  Hero -> Html Msg
 favoritesView filteredHeroes heroes =
   div []
@@ -31,6 +32,37 @@ favoriteView hero =
               [h4 [][ text hero.name]]
         ]
   ]
+-- *************************************************
+
+-- Heroes views
+heroDetailView : Hero -> Html Msg
+heroDetailView hero =
+  li []
+      [
+        a [href ("#/heroes/" ++ hero.id)]
+        [ span [class "badge"] [ (text hero.id)]
+          , text hero.name   
+        ]
+        , button [class "delete", title "delete hero" ] [text "x"]
+      ]
+  
+
+heroesView : List Hero -> Html Msg
+heroesView heroes = 
+    div []
+        [ h2 [] [text "My Heroes"]
+          , div []
+              [ label []
+                      [ 
+                        text "Hero Name"
+                        , input [] []
+                        , button [] [text "Add"]
+                      ]
+              ]
+          , ul [class "heroes"] (List.map heroDetailView heroes)
+        ]
+-- *****************************************************
+{--
 
 detailView :  Hero -> Html Msg
 detailView hero =
@@ -58,6 +90,7 @@ heroView hero =
       [ label [][text "Name: "]
       , span [] [text hero.name]
       ]
+--}
 
 heroesSearchView : List Hero  -> Html  Msg
 heroesSearchView heroes = 
@@ -76,19 +109,4 @@ heroSearchView hero =
        a [href  ("/detail/" ++ hero.id) ][text hero.name]
      ]
 
-{-
-<div id="search-component">
-  <h4>Hero Search</h4>
-
-  <input #searchBox id="search-box" (keyup)="search(searchBox.value)" />
-
-  <ul class="search-result">
-    <li *ngFor="let hero of heroes$ | async" >
-      <a routerLink="/detail/{{hero.id}}">
-        {{hero.name}}
-      </a>
-    </li>
-  </ul>
-</div>
--}
 

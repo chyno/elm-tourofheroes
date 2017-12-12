@@ -43,6 +43,8 @@ update msg model =
                     HeroRoute id ->
                         ( { model | route = newRoute }, fetchHero id )
                     _ ->
-                        ( { model | route = newRoute }, Cmd.none )
-
+                        ( { model | route = newRoute }, fetchHeroes )
+                        
+        Msgs.GoBack ->
+             ( { model | route = HeroesRoute }, fetchHeroes )    
                 

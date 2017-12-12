@@ -7,6 +7,7 @@ import RemoteData exposing (WebData)
 import RemoteData
 import Routing exposing (..)
 import Heroes.List exposing (..)
+import Heroes.Detail exposing (..)
 
 
 view : Model -> Html Msg

@@ -15,7 +15,7 @@ init location =
         currentRoute =
             Routing.parseLocation location
     in
-        ( (initialModel currentRoute), Cmd.none )
+        ( (initialModel currentRoute), fetchHeroes )
 
 
 subscriptions : Model -> Sub Msg

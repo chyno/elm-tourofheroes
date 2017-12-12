@@ -1,4 +1,4 @@
-module Commands exposing (..)
+module Commands exposing (fetchHero, fetchHeroes, fetchFavorites)
 import Http
 import Json.Decode as Decode
 import Json.Decode.Pipeline exposing (decode, required)
@@ -8,16 +8,15 @@ import Models exposing (HeroId, Hero)
 import RemoteData
 
 
+
 fetchHero : String -> Cmd Msg
 fetchHero id =
-    Debug.log "... fetching hero"
     Http.get (fetchHeroUrl id) heroDecoder
         |> RemoteData.sendRequest
         |> Cmd.map Msgs.OnFetchHero
 
 fetchHeroes : Cmd Msg
 fetchHeroes =
-    Debug.log "... fetching heroes"
     Http.get fetchHeroesUrl heroesDecoder
         |> RemoteData.sendRequest
         |> Cmd.map Msgs.OnFetchHeroes
@@ -25,7 +24,6 @@ fetchHeroes =
 
 fetchFavorites : Cmd Msg
 fetchFavorites =
-    Debug.log "... fetching favotites"
     Http.get fetchFavoritesUrl heroesDecoder
         |> RemoteData.sendRequest
         |> Cmd.map Msgs.OnFetchHeroes
